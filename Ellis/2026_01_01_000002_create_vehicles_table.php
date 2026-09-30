@@ -15,3 +15,18 @@ return new class extends Migration
                   ->cascadeOnDelete()
                   ->cascadeOnUpdate();
             $table->string('name', 150);
+            $table->string('license_plate', 20)->unique();
+            $table->decimal('daily_rate', 12, 2);
+            $table->enum('status', ['available', 'rented', 'maintenance'])->default('available');
+            $table->string('image_url')->nullable();
+            $table->timestamps();
+            
+            $table->index('status');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('vehicles');
+    }
+};
